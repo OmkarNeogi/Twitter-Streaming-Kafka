@@ -51,10 +51,6 @@ public class TwitterKafkaProducer {
 	}
 	
 	public static void streamTwitter(Producer<String, String> producer) throws InterruptedException {
-		/*
-		 * Attribution: 
-		 * github.com/twitter/hbc/blob/master/hbc-example/src/main/java/com/twitter/hbc/example/FilterStreamExample.java
-		 */
 		
 		String consumerKey = "6rGVr1Oki6DUsltOGVmRrfPVd";
 		String consumerSecret = "HGZt9Kzxp74hrqVlSZXzhEVYLXlCkWqNaZejlTiQwgBkkKmNel";
@@ -64,13 +60,11 @@ public class TwitterKafkaProducer {
 		
 		BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(100000);
 		
-		/** Declare the host you want to connect to, the endpoint, and authentication (basic auth or oauth) */
 		Hosts hosebirdHosts = new HttpHosts(Constants.STREAM_HOST);
 		StatusesFilterEndpoint hosebirdEndpoint = new StatusesFilterEndpoint();
 		List<String> terms = Lists.newArrayList("#DeathTo");
 		hosebirdEndpoint.trackTerms(terms);
 
-		// These secrets should be read from a configuration file
 		Authentication hosebirdAuth = 
 				new OAuth1(consumerKey, consumerSecret, accessToken, accessTokenSecret);
 		
@@ -82,7 +76,7 @@ public class TwitterKafkaProducer {
 				  .processor(new StringDelimitedProcessor(msgQueue));
 		
 		Client hosebirdClient = builder.build();
-		// Attempts to establish a connection.
+
 		hosebirdClient.connect();
 		
 		while (!hosebirdClient.isDone()) {
@@ -94,5 +88,7 @@ public class TwitterKafkaProducer {
 		}
 		
 		hosebirdClient.stop();
+		producer.flush();
+		producer.close();
 	}
 }
