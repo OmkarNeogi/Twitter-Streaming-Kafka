@@ -52,10 +52,10 @@ public class TwitterKafkaProducer {
 	
 	public static void streamTwitter(Producer<String, String> producer) throws InterruptedException {
 		
-		String consumerKey = "6rGVr1Oki6DUsltOGVmRrfPVd";
-		String consumerSecret = "HGZt9Kzxp74hrqVlSZXzhEVYLXlCkWqNaZejlTiQwgBkkKmNel";
-		String accessToken = "772927355237044224-fMFR5dK6UgsJ7SrkmzTG2asEIcrwYEc";
-		String accessTokenSecret = "8Y39OEcS7yFeEbI7oAKpKeYhHIKO2aPRAZIa0RjTyPKCP";
+		String consumerKey = "*";
+		String consumerSecret = "*";
+		String accessToken = "*-*";
+		String accessTokenSecret = "*";
 		
 		
 		BlockingQueue<String> msgQueue = new LinkedBlockingQueue<String>(100000);
